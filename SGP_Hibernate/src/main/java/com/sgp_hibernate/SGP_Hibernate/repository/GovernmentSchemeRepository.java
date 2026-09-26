@@ -5,34 +5,32 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.sgp_hibernate.SGP_Hibernate.entity.Role;
-import com.sgp_hibernate.SGP_Hibernate.entity.User;
+import com.sgp_hibernate.SGP_Hibernate.entity.GovernmentScheme;
 
-public class UserRepository {
+public class GovernmentSchemeRepository {
 	
 private SessionFactory sessionFactory;
 	
-	public UserRepository() {
+	public GovernmentSchemeRepository() {
 		
 		Configuration configuration = new Configuration();
 		
 		configuration.configure();
 		
-		configuration.addAnnotatedClass(User.class);
-		configuration.addAnnotatedClass(Role.class);
+		configuration.addAnnotatedClass(GovernmentScheme.class);
 		
 		sessionFactory = configuration.buildSessionFactory();
 		
 	}
 	
-	//Create user
-	public void addUser(User user) {
+	//Create Scheme
+	public void addGovernmentScheme(GovernmentScheme scheme) {
 		
 		Session session = sessionFactory.openSession();
 		
 		Transaction transaction = session.beginTransaction();
 		
-		session.persist(user);
+		session.persist(scheme);
 		
 		transaction.commit();
 		
@@ -40,49 +38,49 @@ private SessionFactory sessionFactory;
 		
 	}
 	
-	//Read or GET user
-	public User getUser(int userId) {
-		
+	//Read or GET Scheme
+	public GovernmentScheme getGovernmentScheme(int schemeId) {
+				
 		Session session = sessionFactory.openSession();
-		
-		User user = session.find(User.class, userId);
-		
+				
+		GovernmentScheme scheme = session.find(GovernmentScheme.class, schemeId);
+				
 		session.close();
-		
-		return user;
-		
+				
+		return scheme;
+				
 	}
-	
-	//Update user
-	public void updateUser(User user) {
-		
+			
+	//Update scheme
+	public void updateGovernmentScheme(GovernmentScheme scheme) {
+				
 		Session session = sessionFactory.openSession();
-		
+				
 		Transaction transaction = session.beginTransaction();
-		
-		session.merge(user);
-		
+				
+		session.merge(scheme);
+				
 		transaction.commit();
-		
+				
 		session.close();
-		
+				
 	}
-	
-	//Delete user
-	public void deleteUser(int userId) {
-		
+			
+	//Delete scheme
+	public void deleteGovernmentScheme(int schemeId) {
+				
 		Session session = sessionFactory.openSession();
-		
+				
 		Transaction transaction = session.beginTransaction();
-		
-		User user = session.find(User.class, userId);
-		
-		session.remove(user);
-		
+				
+		GovernmentScheme scheme = session.find(GovernmentScheme.class, schemeId);
+				
+		session.remove(scheme);
+				
 		transaction.commit();
-		
+				
 		session.close();
-		
+				
 	}
 
 }

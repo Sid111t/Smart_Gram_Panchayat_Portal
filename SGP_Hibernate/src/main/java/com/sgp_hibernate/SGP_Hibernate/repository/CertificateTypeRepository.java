@@ -1,11 +1,13 @@
 package com.sgp_hibernate.SGP_Hibernate.repository;
 
 import org.hibernate.Session;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import com.sgp_hibernate.SGP_Hibernate.entity.CertificateType;
+
 
 public class CertificateTypeRepository {
 	
@@ -66,7 +68,7 @@ public class CertificateTypeRepository {
 			
 		}
 		
-		//Delete role
+		//Delete certificate type
 		public void deleteCertificateType(int certificateTypeId) {
 			
 			Session session = sessionFactory.openSession();

@@ -15,6 +15,7 @@ import com.sgp_hibernate.SGP_Hibernate.repository.CertificateTypeRepository;
 import com.sgp_hibernate.SGP_Hibernate.repository.GovernmentSchemeRepository;
 import com.sgp_hibernate.SGP_Hibernate.repository.RoleRepository;
 import com.sgp_hibernate.SGP_Hibernate.repository.UserRepository;
+import com.sgp_hibernate.SGP_Hibernate.service.EligibilityService;
 
 public class App {
 
@@ -31,6 +32,7 @@ public class App {
             System.out.println("4. Certificate");
             System.out.println("5. Certificate Document");
             System.out.println("6. Government Scheme");
+            System.out.println("7. Eligibility Check");
             System.out.println("0. Exit");
 
             System.out.print("Enter choice: ");
@@ -60,6 +62,10 @@ public class App {
 
                 case 6:
                     governmentSchemeMenu(scanner);
+                    break;
+                    
+                case 7:
+                    eligibilityMenu(scanner);
                     break;
 
                 case 0:
@@ -214,6 +220,9 @@ public class App {
 
                     System.out.print("Enter address: ");
                     String address = scanner.nextLine();
+                    
+                    System.out.print("Enter annual income: ");
+                    double annualIncome = scanner.nextDouble();
 
                     User user = new User(
                             role,
@@ -223,7 +232,8 @@ public class App {
                             password,
                             dateOfBirth,
                             gender,
-                            address
+                            address,
+                            annualIncome
                     );
 
                     userRepository.addUser(user);
@@ -282,6 +292,9 @@ public class App {
 
                     System.out.print("Enter address: ");
                     String updateAddress = scanner.nextLine();
+                    
+                    System.out.print("Enter annual income: ");
+                    double updateannualIncome = scanner.nextDouble();
 
                     User updateUser = new User(
                             updateRole,
@@ -291,7 +304,8 @@ public class App {
                             updatePassword,
                             updateDob,
                             updateGender,
-                            updateAddress
+                            updateAddress,
+                            updateannualIncome
                     );
 
                     updateUser.setUserId(updateId);
@@ -895,6 +909,52 @@ public class App {
                 default:
                     System.out.println("Invalid choice!");
             }
+        }
+    }
+    
+    //Scheme Eligibility
+    public static void eligibilityMenu(Scanner scanner) {
+
+        UserRepository userRepository = new UserRepository();
+        GovernmentSchemeRepository schemeRepository =
+                new GovernmentSchemeRepository();
+
+        EligibilityService eligibilityService =
+                new EligibilityService();
+
+        System.out.println("\n--- Eligibility Check ---");
+
+        System.out.print("Enter user id: ");
+        int userId = scanner.nextInt();
+
+        System.out.print("Enter scheme id: ");
+        int schemeId = scanner.nextInt();
+
+        User user = userRepository.getUser(userId);
+
+        GovernmentScheme scheme =
+                schemeRepository.getGovernmentScheme(schemeId);
+
+        if (user == null) {
+            System.out.println("User not found.");
+            return;
+        }
+
+        if (scheme == null) {
+            System.out.println("Government scheme not found.");
+            return;
+        }
+
+        boolean eligible =
+                eligibilityService.cehckEligibility(user, scheme);
+
+        System.out.println("\nUser: " + user.getFullName());
+        System.out.println("Scheme: " + scheme.getSchemeName());
+
+        if (eligible) {
+            System.out.println("Result: Eligible");
+        } else {
+            System.out.println("Result: Not Eligible");
         }
     }
 }

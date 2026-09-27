@@ -29,13 +29,14 @@ public class User {
 	private LocalDate dateOfBirth;
 	private String gender;
 	private String address;
+	private double annualIncome;
 	
 	public User() {
 		
 	}
 	
 	public User(Role role, String fullName, String email, String mobileNumber, String password, LocalDate dateOfBirth,
-			String gender, String address) {
+			String gender, String address, double annualIncome) {
 		super();
 		this.role = role;
 		this.fullName = fullName;
@@ -45,6 +46,7 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.address = address;
+		this.annualIncome = annualIncome;
 	}
 
 	public int getUserId() {
@@ -118,12 +120,20 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public double getAnnualIncome() {
+	    return annualIncome;
+	}
+
+	public void setAnnualIncome(double annualIncome) {
+	    this.annualIncome = annualIncome;
+	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", role=" + role + ", fullName=" + fullName + ", email=" + email
 				+ ", mobileNumber=" + mobileNumber + ", password=" + password + ", dateOfBirth=" + dateOfBirth
-				+ ", gender=" + gender + ", address=" + address + "]";
+				+ ", gender=" + gender + ", address=" + address + ", annualIncome=" + annualIncome +"]";
 	}
 	
 	
